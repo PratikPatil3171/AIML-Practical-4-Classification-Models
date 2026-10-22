@@ -1,0 +1,36 @@
+results_df = pd.DataFrame(results)
+
+
+results_df = results_df.sort_values(
+    by="F1-Score",
+    ascending=False
+).reset_index(drop=True)
+
+print("\n\n========== COMPARATIVE RESULTS ==========")
+print(results_df.round(4).to_string(index=False))
+
+
+best_model = results_df.iloc[0]
+
+print("\nBest model based on weighted F1-score:")
+print(best_model["Algorithm"])
+
+print(f"F1-Score: {best_model['F1-Score']:.4f}")
+print(f"Accuracy: {best_model['Accuracy']:.4f}")
+
+
+best_accuracy = results_df.loc[
+    results_df["Accuracy"].idxmax()
+]
+
+print("\nBest model based on accuracy:")
+print(best_accuracy["Algorithm"])
+print(f"Accuracy: {best_accuracy['Accuracy']:.4f}")
+
+
+results_df.to_csv(
+    "classification_comparison.csv",
+    index=False
+)
+
+print("\nResults saved to classification_comparison.csv")
