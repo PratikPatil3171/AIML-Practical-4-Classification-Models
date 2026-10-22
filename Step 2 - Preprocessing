@@ -1,0 +1,17 @@
+numerical_pipeline = Pipeline([
+    ("imputer", SimpleImputer(strategy="median")),
+    ("scaler", StandardScaler())
+])
+
+categorical_pipeline = Pipeline([
+    ("imputer", SimpleImputer(strategy="most_frequent")),
+    ("encoder", OneHotEncoder(
+        handle_unknown="ignore",
+        sparse_output=False
+    ))
+])
+
+preprocessor = ColumnTransformer([
+    ("numerical", numerical_pipeline, numerical_features),
+    ("categorical", categorical_pipeline, categorical_features)
+])
